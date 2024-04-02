@@ -27,7 +27,7 @@ def parse_pubmed(ids):
     ids=pd.read_csv(ids,header=None)[0].values
     
     output_data={'title':[],'year':[],'lastname':[],'first_initial':[],'initials':[],'id':[],'journal':[]}
-    for entry in input_data.split(','):
+    for entry in ids:
         fetch = PubMedFetcher()
         article = fetch.article_by_pmid(entry)
         title=article.title
