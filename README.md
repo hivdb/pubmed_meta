@@ -1,2 +1,2 @@
-# pubmed_meta
+# Study meta data
 Fetch pub med 
