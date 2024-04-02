@@ -58,10 +58,10 @@ def parse_pubmed(ids):
     res=res[['_RefID','Author', 'title','journal','year','id']]
     res.columns=['_RefID','Author','Title','Journal','RefYear','MedlineID']
     res['Published']='Yes'
-    res.to_csv('tblReferences.csv',index=False)
+    res.to_csv('tblReferences.csv',index=False,encoding='utf-8-sig')
 
     res2=pd.DataFrame(authors)
-    res2.to_csv('tblAuthors.csv',index=False)
+    res2.to_csv('tblAuthors.csv',index=False, encoding='utf-8-sig')
 
 def main():
     parser = argparse.ArgumentParser("PUBMED METADATA PARSER")
