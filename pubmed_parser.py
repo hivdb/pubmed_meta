@@ -32,9 +32,7 @@ def parse_pubmed(ids):
         'RefID': [],
         'title': [],
         'year': [],
-        'lastname': [],
-        'first_initial': [],
-        'initials': [],
+        'Author': [],
         'id': [],
         'journal': []}
     authors = {
@@ -51,28 +49,27 @@ def parse_pubmed(ids):
         title = article.title
         year = article.year
         journal = article.journal
-        lastname = article.author1_last_fm.split(' ')[0]
-        first_initial = article.author1_last_fm.split(' ')[1]
-        initials = first_initial + lastname[0]
+
+        author_list = article.authors_str.split(';')
+        first_author = author_list[0].strip()
+        first_author = first_author.replace(' ', ', ')
 
         output_data['RefID'].append(counter)
         output_data['title'].append(title)
         output_data['year'].append(year)
-        output_data['lastname'].append(lastname)
-        output_data['first_initial'].append(first_initial)
+        output_data['Author'].append(first_author)
         output_data['journal'].append(journal)
-        output_data['initials'].append(initials)
         output_data['id'].append(entry)
 
-        for a in article.authors:
+        for a in author_list:
             authors['RefID'].append(counter)
-            authors['LastName'].append(a.split(' ')[0])
-            authors['Initials'].append(a.split(' ')[1]+a.split(' ')[0][0])
+            lastname, firstname = a.strip().rsplit(' ', 1)
+            authors['LastName'].append(lastname)
+            authors['Initials'].append(firstname)
 
         counter += 1
 
     res = pd.DataFrame(output_data)
-    res['Author'] = res['lastname']+', '+res['first_initial']
     res = res[['RefID', 'Author', 'title', 'journal', 'year', 'id']]
     res.columns = ['RefID', 'Author', 'Title', 'Journal', 'RefYear', 'MedlineID']
     res['Published'] = 'Yes'
