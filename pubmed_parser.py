@@ -41,7 +41,7 @@ def parse_pubmed(ids):
         'Initials': []
         }  # RefID    LastName    Initials
 
-    counter = 3290
+    counter = 3410
 
     for entry in ids:
         fetch = PubMedFetcher()
