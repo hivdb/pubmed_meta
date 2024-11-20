@@ -33,6 +33,7 @@ def parse_pubmed(ids):
         'title': [],
         'year': [],
         'Author': [],
+        'Author List': [],
         'id': [],
         'journal': []}
     authors = {
@@ -58,6 +59,7 @@ def parse_pubmed(ids):
         output_data['title'].append(title)
         output_data['year'].append(year)
         output_data['Author'].append(first_author)
+        output_data['Author List'].append(article.authors_str)
         output_data['journal'].append(journal)
         output_data['id'].append(entry)
 
@@ -70,8 +72,8 @@ def parse_pubmed(ids):
         counter += 1
 
     res = pd.DataFrame(output_data)
-    res = res[['RefID', 'Author', 'title', 'journal', 'year', 'id']]
-    res.columns = ['RefID', 'Author', 'Title', 'Journal', 'RefYear', 'MedlineID']
+    res = res[['RefID', 'Author', 'Author List', 'title', 'journal', 'year', 'id']]
+    res.columns = ['RefID', 'Author', 'Author List', 'Title', 'Journal', 'RefYear', 'MedlineID']
     res['Published'] = 'Yes'
     res.to_csv('tblReferences.csv', index=False, encoding='utf-8-sig')
 
